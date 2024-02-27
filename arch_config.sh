@@ -1,11 +1,9 @@
+#!/bin/sh
 # Script to config my Arch distro.
-# TODO install yay
-# How to run the function within this script
-install_yay
 
+# Functions
 install_yay() {
-    pacman -S --needed git base-devel
-    # Maybe create a dir to save this sort of stuff
+    sudo pacman -S  git base-devel --needed --noconfirm
     git clone https://aur.archlinux.org/yay.git "$HOME"
     cd yay
     makepkg -si
@@ -16,3 +14,8 @@ install_yay() {
     yay -Syu --devel
     yay -Y --devel --save
 }
+
+# Execute
+# TODO install yay
+# TODO install zsh and oh-my-zsh and config
+# TODO install
