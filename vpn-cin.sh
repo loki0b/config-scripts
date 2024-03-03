@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo pacman -S networkmanager-l2tp strongswan
+sudo pacman -S networkmanager-l2tp strongswan --needed --noconfirm
 
 name="CIn VPN"
 gateway="vpn.cin.ufpe.br"
@@ -26,3 +26,5 @@ nmcli connection modify "$name" \
             require-mppe = yes,
             user = $1,
             user-auth-type = password" \
+
+echo "CIn VPN Configured"
