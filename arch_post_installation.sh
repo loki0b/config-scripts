@@ -2,20 +2,12 @@
 # Post installation script to my Arch distro.
 
 TMP_DIRECTORY="$HOME/tmp"
-PACMAN_CONF="/etc/pacman.conf"
 
 create_temporary_folder () {
     if [[ ! -d "$TMP_DIRECTORY" ]]; then
             mkdir -p "$TMP_DIRECTORY"
     fi
     cd "$TMP_DIRECTORY"
-}
-
-config_pacman_conf () {
-    # Enable color in pacman
-    sudo vim "$PACMAN_CONF"
-    sed -i 's/^#Color/Color/' "$PACMAN_CONF"
-    echo "Pacman color enabled"
 }
 
 install_paru() {
@@ -43,7 +35,6 @@ install_oh_my_zsh() {
 
 # Execute
 create_temporary_folder
-config_pacman_conf
 install_zsh
 install_oh_my_zsh
 install_paru

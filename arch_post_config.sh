@@ -6,6 +6,13 @@ ZSH_DEFAULT_THEME='robbyrussell'
 ZSH_MY_THEME='gentoo'
 ZSH_PLUGIN_LINE=$(grep -m 1 -n '^[^#]*plugins=' "${ZSHRC_PATH}" | cut -d: -f1)
 PLUGINS="git zsh-syntax-highlighting"
+PACMAN_CONF_PATH='/etc/pacman.conf'
+
+config_pacman_conf() {
+    # Enable colors in pacman
+    sed -i 's/^#Color/Color' "${PACMAN_CONF_PATH}"
+    echo 'Pacman colors enabled'
+}
 
 config_oh_my_zsh () {
     sed -i "${ZSH_THEME_LINE}s/${ZSH_DEFAULT_THEME}/${ZSH_MY_THEME}/" ${ZSHRC_PATH}
@@ -18,5 +25,6 @@ install_zsh_syntax_highlighting() {
     echo "zhs-syntax-highlighting installed"
 }
 
+#config_pacman_conf
 #config_oh_my_zsh
 #install_zsh_syntax_highlighting
