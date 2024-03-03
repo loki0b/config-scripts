@@ -1,5 +1,6 @@
 #!/bin/bash
-# Post installation script to my Arch distro.
+
+# Post installation script
 
 TMP_DIRECTORY="$HOME/tmp"
 
@@ -33,8 +34,14 @@ install_oh_my_zsh() {
     # config oh-my-zsh
 }
 
+install_programs () {
+    sudo pacman -S bitwarden obsidian --needed
+    echo 'Programs installed success'
+}
+
 # Execute
 create_temporary_folder
 install_zsh
 install_oh_my_zsh
 install_paru
+install_programs
