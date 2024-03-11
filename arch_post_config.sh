@@ -1,6 +1,48 @@
 #!/bin/bash
 
-# Post config script
+# Installation
+TMP_DIRECTORY="${HOME}/tmp"
+
+create_temp_directory () {
+  if [[ ! -d "$TMP_DIRECTORY" ]]; then
+	  mkdir -p "$TMP_DIRECTORY"
+  fi
+  cd "$TMP_DIRECTORY"
+  echo 'tmp dir created'
+}
+
+
+install_paru () {
+  git clone https://aur.archlinux.org/paru.git
+  cd paru
+  makepkg -si
+  # flip search order
+  paru --gendb
+  paru -c
+  # read about makepkg.conf
+  cd "$TMP_DIRECTORY"
+  echo 'paru successfully installed'
+}
+
+instal_zsh () {
+  # read about .zshrc
+  # install zsh-completions (?)
+  sudo pacman -S zsh --needed --noconfirm
+  echo 'zsh successfully installed'
+}
+
+install_zsh_framework () {
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  echo 'Oh-my-zsh successfully installed'
+}
+
+install_programs () {
+  # install some programs
+  sudo pacman -S bitwarden obsidian --needed
+  echo 'Programs successfully installed'
+}
+
+# Configurations
 
 # Paths
 ZSHRC_PATH="$HOME/.zshrc"
@@ -32,7 +74,3 @@ install_zsh_syntax_highlighting() {
     sed -i "${ZSH_PLUGIN_LINE}s/git/${PLUGINS}/" ${ZSHRC_PATH}
     echo "zhs-syntax-highlighting installed"
 }
-
-#config_pacman_conf
-#config_oh_my_zsh
-#install_zsh_syntax_highlighting
