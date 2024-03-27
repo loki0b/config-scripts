@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: Install Nvim
+
 # Installation
 TMP_DIRECTORY="${HOME}/tmp"
 
