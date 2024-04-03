@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO: Install Nvim
-
 # Installation
 TMP_DIRECTORY="${HOME}/tmp"
 
@@ -12,7 +10,6 @@ create_temp_directory () {
   cd "$TMP_DIRECTORY"
   echo 'tmp dir created'
 }
-
 
 install_paru () {
   git clone https://aur.archlinux.org/paru.git
@@ -26,7 +23,7 @@ install_paru () {
   echo 'paru successfully installed'
 }
 
-instal_zsh () {
+install_zsh () {
   # read about .zshrc
   # install zsh-completions (?)
   sudo pacman -S zsh --needed --noconfirm
@@ -61,7 +58,7 @@ PLUGINS="git zsh-syntax-highlighting"
 
 config_pacman_conf() {
     # Enable colors in pacman
-    sed -i 's/^#Color/Color' "${PACMAN_CONF_PATH}"
+    sudo sed -i 's/^#Color/Color/' "${PACMAN_CONF_PATH}"
     echo 'Pacman colors enabled'
 }
 
@@ -76,3 +73,12 @@ install_zsh_syntax_highlighting() {
     sed -i "${ZSH_PLUGIN_LINE}s/git/${PLUGINS}/" ${ZSHRC_PATH}
     echo "zhs-syntax-highlighting installed"
 }
+
+#create_temp_directory
+#install_zsh
+#config_pacman_conf
+#install_paru
+#install_zsh_framework
+#config_oh_my_zsh
+install_zsh_syntax_highlighting
+#install_programs
