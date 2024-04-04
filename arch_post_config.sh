@@ -3,24 +3,30 @@
 # Installation
 TMP_DIRECTORY="${HOME}/tmp"
 
+# TODO: improve interation.
+
 create_temp_directory () {
   if [[ ! -d "$TMP_DIRECTORY" ]]; then
-	  mkdir -p "$TMP_DIRECTORY"
+	mkdir -p "$TMP_DIRECTORY"
+  	echo 'tmp directory created'
   fi
   cd "$TMP_DIRECTORY"
-  echo 'tmp dir created'
 }
 
 install_paru () {
-  git clone https://aur.archlinux.org/paru.git
-  cd paru
-  makepkg -si
-  # flip search order
-  paru --gendb
-  paru -c
-  # read about makepkg.conf
+  if [[ ! -x $(command -v paru)  ]]; then
+  	git clone https://aur.archlinux.org/paru.git
+	cd paru
+  	makepkg -si
+  	# flip search order
+  	paru --gendb
+  	paru -c
+  	# read about makepkg.conf
+	echo 'paru successfully installed'
+  else
+  	echo 'paru is already installed -- skiping'
+  fi
   cd "$TMP_DIRECTORY"
-  echo 'paru successfully installed'
 }
 
 install_zsh () {
@@ -31,8 +37,12 @@ install_zsh () {
 }
 
 install_zsh_framework () {
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  echo 'Oh-my-zsh successfully installed'
+  if [[ ! -d "$HOME/.oh-my-zsh" ]]; then 
+  	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  	echo 'oh-my-zsh successfully installed'
+  else
+  	echo 'oh-my-zsh is already installed --skiping'
+  fi
 }
 
 install_programs () {
@@ -69,16 +79,20 @@ config_oh_my_zsh () {
 }
 
 install_zsh_syntax_highlighting() {
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    sed -i "${ZSH_PLUGIN_LINE}s/git/${PLUGINS}/" ${ZSHRC_PATH}
-    echo "zhs-syntax-highlighting installed"
+	if [[ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"   ]]; then    
+		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+		sed -i "${ZSH_PLUGIN_LINE}s/git/${PLUGINS}/" ${ZSHRC_PATH}
+		echo "zhs-syntax-highlighting configured"
+	else
+		echo 'zsh-syntax-highlighting is already installed -- skipping'
+	fi
 }
 
-#create_temp_directory
-#install_zsh
-#config_pacman_conf
-#install_paru
-#install_zsh_framework
-#config_oh_my_zsh
+create_temp_directory
+install_zsh
+config_pacman_conf
+install_paru
+install_zsh_framework
+config_oh_my_zsh
 install_zsh_syntax_highlighting
-#install_programs
+install_programs
