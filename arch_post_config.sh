@@ -60,6 +60,7 @@ PACMAN_CONF_PATH='/etc/pacman.conf'
 # Line numbers
 ZSH_THEME_LINE=$(grep -m 1 -n 'ZSH_THEME=' "${ZSHRC_PATH}" | cut -d: -f1)
 ZSH_PLUGIN_LINE=$(grep -m 1 -n '^[^#]*plugins=' "${ZSHRC_PATH}" | cut -d: -f1)
+ZSH_OMZUPDATE_LINE=$(grep -m 3 -n 'zistyle' "$ZSHRC_PATH" | cut -d: -f1)
 
 # General
 ZSH_DEFAULT_THEME='robbyrussell'
@@ -76,6 +77,9 @@ config_oh_my_zsh () {
     # Switching theme
     sed -i "${ZSH_THEME_LINE}s/${ZSH_DEFAULT_THEME}/${ZSH_MY_THEME}/" ${ZSHRC_PATH}
     echo "New ZSH_THEME ${ZSH_MY_THEME}"
+    # Mode reminder omz:update
+    sed -i "${ZSH_OMZUPDATE_LINE}s/# zistyle/zistyle/" "$ZSHRC_PATH"
+    echo 'OMZ remider update mode enabled'
 }
 
 install_zsh_syntax_highlighting() {
