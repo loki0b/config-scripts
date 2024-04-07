@@ -78,7 +78,7 @@ config_oh_my_zsh () {
     sed -i "${ZSH_THEME_LINE}s/${ZSH_DEFAULT_THEME}/${ZSH_MY_THEME}/" ${ZSHRC_PATH}
     echo "New ZSH_THEME ${ZSH_MY_THEME}"
     # Mode reminder omz:update
-    sed -i "${ZSH_OMZUPDATE_LINE}s/# zistyle/zistyle/" "$ZSHRC_PATH"
+    sed -i "${ZSH_OMZUPDATE_LINE}s/# zstyle/zstyle/" "$ZSHRC_PATH"
     echo 'OMZ remider update mode enabled'
 }
 
