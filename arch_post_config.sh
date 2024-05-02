@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Installation
 TMP_DIRECTORY="${HOME}/tmp"
+PACMAN_CONF_PATH='/etc/pacman.conf'
 
 # TODO: improve interation.
 
@@ -31,8 +31,7 @@ install_paru () {
 
 install_zsh () {
   # read about .zshrc
-  # install zsh-completions (?)
-  sudo pacman -S zsh --needed --noconfirm
+  sudo pacman -S zsh zsh-completions --needed --noconfirm
   echo 'zsh successfully installed'
 }
 
@@ -51,29 +50,13 @@ install_programs () {
   echo 'Programs successfully installed'
 }
 
-# Configurations
-
-# Paths
-ZSHRC_PATH="$HOME/.zshrc"
-PACMAN_CONF_PATH='/etc/pacman.conf'
-
-# Line numbers
-ZSH_THEME_LINE=$(grep -m 1 -n 'ZSH_THEME=' "${ZSHRC_PATH}" | cut -d: -f1)
-ZSH_PLUGIN_LINE=$(grep -m 1 -n '^[^#]*plugins=' "${ZSHRC_PATH}" | cut -d: -f1)
-ZSH_OMZUPDATE_LINE=$(grep -m 3 -n 'zistyle' "$ZSHRC_PATH" | cut -d: -f1)
-
-# General
-ZSH_DEFAULT_THEME='robbyrussell'
-ZSH_MY_THEME='gentoo'
-PLUGINS="git zsh-syntax-highlighting"
-
 config_pacman_conf() {
     # Enable colors in pacman
     sudo sed -i 's/^#Color/Color/' "${PACMAN_CONF_PATH}"
     echo 'Pacman colors enabled'
 }
 
-config_oh_my_zsh () {
+config_zsh_theme () {
     # Switching theme
     sed -i "${ZSH_THEME_LINE}s/${ZSH_DEFAULT_THEME}/${ZSH_MY_THEME}/" ${ZSHRC_PATH}
     echo "New ZSH_THEME ${ZSH_MY_THEME}"
@@ -92,11 +75,35 @@ install_zsh_syntax_highlighting() {
 	fi
 }
 
-create_temp_directory
-install_zsh
+install_base_packages () {
+	sudo pacman -S git base-devel --needed --noconfirm
+	echo 'base packages installed'
+	
+    sudo pacman -S pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-audio --needed --noconfirm
+	echo 'audio installed'
+	
+    sudo pacman -S i3 xorg-server xorg-xinit --needed --noconfirm
+	echo 'i3-group installed'
+}
+
+config_zsh () {
+    ZSHRC_PATH="$HOME/.zshrc"
+    ZSH_THEME_LINE=$(grep -m 1 -n 'ZSH_THEME=' "${ZSHRC_PATH}" | cut -d: -f1)
+    ZSH_PLUGIN_LINE=$(grep -m 1 -n '^[^#]*plugins=' "${ZSHRC_PATH}" | cut -d: -f1)
+    ZSH_OMZUPDATE_LINE=$(grep -m 3 -n 'zistyle' "$ZSHRC_PATH" | cut -d: -f1)
+    ZSH_DEFAULT_THEME='robbyrussell'
+    ZSH_MY_THEME='gentoo'
+    PLUGINS="git zsh-syntax-highlighting"
+    
+    install_zsh
+    config_zsh_theme 
+    install_zsh_framework #omz
+    install_zsh_syntax_highlighting
+}
+
 config_pacman_conf
+install_base_packages
+create_temp_directory
 install_paru
-install_zsh_framework
-config_oh_my_zsh
-install_zsh_syntax_highlighting
-install_programs
+config_zsh
+#install_programs
