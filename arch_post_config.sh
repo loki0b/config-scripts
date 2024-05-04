@@ -3,7 +3,16 @@
 TMP_DIRECTORY="${HOME}/tmp"
 PACMAN_CONF_PATH='/etc/pacman.conf'
 
-# TODO: improve interation.
+# TODO:
+# improve interation
+# install vpn
+# install gnome-keyring libsecret 
+# install and config i3 enviroment, xclip
+# improve base packages function
+# install rofi, allacritty how to config rofi
+# config xinit and xorg layout
+# set the i3lock
+
 
 create_temp_directory () {
   if [[ ! -d "$TMP_DIRECTORY" ]]; then
@@ -101,9 +110,9 @@ config_zsh () {
     install_zsh_syntax_highlighting
 }
 
-config_pacman_conf
-install_base_packages
-create_temp_directory
-install_paru
-config_zsh
+#config_pacman_conf
+#install_base_packages
+#create_temp_directory
+#install_paru
+#config_zsh
 #install_programs
