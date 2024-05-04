@@ -1,0 +1,8 @@
+lsof strace
+valgrind
+trim ssd
+config vpn
+config smbclient
+setup the vm env
+uname date commands
+setup gnome-keyring libsecret, git config (hots), ssh-key, keygen, add and agent
