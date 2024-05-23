@@ -4,15 +4,11 @@ TMP_DIRECTORY="${HOME}/tmp"
 PACMAN_CONF_PATH='/etc/pacman.conf'
 
 # TODO:
-# improve interation
-# install vpn
-# install gnome-keyring libsecret 
-# install and config i3 enviroment, xclip
+# set keyring, libsecret 
 # improve base packages function
-# install rofi, allacritty how to config rofi
 # config xinit and xorg layout
 # set the i3lock
-
+# trim ssd
 
 create_temp_directory () {
   if [[ ! -d "$TMP_DIRECTORY" ]]; then
@@ -108,7 +104,6 @@ install_zsh_syntax_highlighting() {
 config_zsh () {
     ZSHRC_PATH="$HOME/.zshrc"
        
-    install_zsh
     config_zsh_theme 
     install_zsh_framework #omz
     install_zsh_syntax_highlighting
@@ -118,4 +113,5 @@ config_zsh () {
 #install_base_packages
 #create_temp_directory
 #install_paru
+#install_zsh
 #config_zsh
