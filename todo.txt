@@ -1,5 +1,0 @@
-lsof strace
-valgrind
-trim ssd
-config smbclient
-setup keyring, libsecret, git config (hots), ssh-key, keygen, add and agent
